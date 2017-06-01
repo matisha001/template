@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>EJS Examples</title>
+    <script type="text/javascript" src="http://cdnjs.gtimg.com/cdnjs/libs/ejs/1.0.0/ejs.min.js"></script>
+    <%# css("index.css") %>
+    <script>
+    var data = {
+        title: 'Cleaning Supplies',
+        supplies: ['mop', 'broom', 'duster'],
+        flag:false,
+        data:['1234', '4567', '5678'],
+        test:{str:'23.329',}
+    }
+
+    window.onload = function() {
+        var tem = document.getElementById("tem").innerHTML;
+        var html = ejs.render(tem, data);
+        document.getElementsByTagName("body")[0].innerHTML = html;
+    }
+    </script>
+</head>
+
+<body>
+<script type="text/html" id="tem">
+
+<h3><%= title %></h3>  
+<ul> 
+<%if(flag){%> 
+    <% for(var i=0; i<supplies.length; i++) { %>  
+        <li>  
+            <a href='supplies/<%= supplies[i] %>'>  
+                <%= supplies[i] %>  
+            </a>  
+        </li>  
+    <% } %>
+<%}else{%> 
+    <% for(var i=0; i<data.length; i++) { %> 
+        <li>   <%= data[i] %> </li>  
+    <% } %>
+<% } %>
+</ul>
+<h3><%= "过滤器" %></h3>  
+<%=: data |  first %>
+<%=: test.str | plus:5 %>
+<h3><%= '变量的使用' %></h3>
+<% var name = "littledu" %>
+<div>
+    Hello, My Name is <%-name %>
+</div>
+</script>
+<script type="text">
+/*
+ejs基础
+	<% %>流程控制标签
+	<%= %>输出标签（原文输出HTML标签）
+	<%- %>输出标签（HTML会被浏览器解析）
+	<%# %>注释标签
+	% 对标记进行转义
+	-%>去掉没用的空格
+引用模板
+	<%- include("./header.ejs") %>
+	<% include header.html %>
+	<%- include("./footer.ejs") %>
+引用 CSS
+	<%- css("style-workflow.css") %>
+引用 js
+	<%- js("style-workflow.css") %>
+占位图
+	占位图，可以指定高、宽，以及 className
+	<%- img(200, 400, 'block__img') %>
+占位文本
+	生成指定长度的占位图，第二个参数为偏移字数
+	<span><%- text(10, 3) %></span>
+
+	
+过滤器
+	<%=: data |  first %>
+	<%=: test.str | plus:5 %>
+*/
+</script>
+</body>
+
+</html>
